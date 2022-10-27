@@ -33,4 +33,4 @@ def bisection(func, a, b, tolerance):
 
 
 # print(bisection("(4*x**3) + 3*x-3", 0, 1, 0.05))
-print(bisection("(x/(x**2 + 1)**(3/2)) -0.1668", 0, 1, 0.05))
+print(bisection("(x/(x**2 + 1)**(3/2)) -0.1668", 0, 1, 0.00000001))
