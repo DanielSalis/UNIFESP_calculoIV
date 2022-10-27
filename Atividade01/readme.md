@@ -19,3 +19,10 @@
 ```
 python <nome_do_arquivo.py>
 ```
+
+- Exemplo:
+  - `python bisection_method.py`
+
+### Alterações
+
+- Para modificar os valores é necessário abrir os arquivos e modificar os parâmetros desejados
