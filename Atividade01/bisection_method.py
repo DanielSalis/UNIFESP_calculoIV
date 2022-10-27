@@ -30,9 +30,6 @@ def bisection(func, a, b, tolerance):
         saida.append([k, c, fk, current_error])
 
     return tabulate(saida, headers=["k", "xk", "f(xk)", 'stepk'])
-    # print(f"Erro atual: {current_error}")
-    # print(f"A: {a}")
-    # print(f"B: {b}")
 
 
 # print(bisection("(4*x**3) + 3*x-3", 0, 1, 0.05))
