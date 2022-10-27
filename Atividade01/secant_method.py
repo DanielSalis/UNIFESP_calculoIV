@@ -21,4 +21,4 @@ def secant(func, x0, x1, tolerance, num_inter):
     return tabulate(saida, headers=["k", "xk", "f(xk)", 'stepk'])
 
 
-print(secant("x**2 - 2", 5, 10, 0.000000000001, 10))
+print(secant("(x/(x**2 + 1)**(3/2)) - 0.1668", 0.3, 0.6, 0.000000000001, 20))
