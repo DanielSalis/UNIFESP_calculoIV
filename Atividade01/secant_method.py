@@ -1,25 +1,24 @@
 from tabulate import tabulate
 
 
-def secant(func, x0, x1, n):
+def secant(func, x0, x1, tolerance, num_inter):
     def f(x):
         f = eval(func)
         return f
 
-    counter = 1
-    k = 0
     saida = []
-    while k <= n:
+    for k in range(1, num_inter, 1):
         fx0 = f(x0)
         fx1 = f(x1)
-        xi = x0 - (fx0 / ((fx0-fx1) / (x0-x1)))
-        fxi = f(xi)
+        if abs(fx1 < tolerance):
+            break
+        xi = x1 - fx1*((x1-x0) / (fx1-fx0))
+        fxi = f(x0)
+        saida.append([k, xi, fxi, fx0])
         x0 = x1
         x1 = xi
-        k = k + 1
-        saida.append([k, xi, fxi, fx0])
 
     return tabulate(saida, headers=["k", "xk", "f(xk)", 'stepk'])
 
 
-print(secant("x**2-2", 1, 2, 5))
+print(secant("x**2 - 2", 5, 10, 0.000000000001, 10))
