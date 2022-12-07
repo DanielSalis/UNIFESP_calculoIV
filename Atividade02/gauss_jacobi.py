@@ -2,14 +2,18 @@ import math
 from tabulate import tabulate
 
 
-def compare(x, xk, eps):
+def get_normres(x, xk):
     current_sum = 0
     arrays_tuple = zip(x, xk)
     for x_i, xk_i in arrays_tuple:
         current_sum += math.fabs(x_i-xk_i)
 
-    if (current_sum < eps):
-        return current_sum
+    return current_sum
+
+
+def compare(current_eps, eps):
+    if (current_eps < eps):
+        return True
     else:
         return False
 
@@ -44,9 +48,9 @@ def run(A, b, max_iterations, eps):
 
             print("Iteração: ", current_iteraction)
             print("xk = ", xk)
-            current_eps = compare(x, xk, eps)
+            current_eps = get_normres(x, xk)
             saida.append([current_iteraction, current_eps])
-            if current_eps:
+            if compare(current_eps, eps):
                 x = xk.copy()
                 break
             x = xk.copy()
