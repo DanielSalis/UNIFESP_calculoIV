@@ -23,7 +23,6 @@ def run(A, b, x_array, max_iterations, eps):
     b_array_length = len(b)
     has_soluction = True
     x = x_array.copy()
-    print(x)
     for i in list(range(0, b_array_length, 1)):
         if (math.fabs(A[i][i]) > 0.0):
             x[i] = b[i]/A[i][i]
