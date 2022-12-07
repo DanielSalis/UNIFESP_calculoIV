@@ -31,8 +31,6 @@ def run(A, b, max_iterations, eps):
             break
 
     if (has_soluction):
-        print("Iteração 0")
-        print("x = ", x)
         xk = x.copy()
         current_iteraction = 0
 
@@ -48,8 +46,6 @@ def run(A, b, max_iterations, eps):
 
                 xk[i] = (1/A[i][i])*(b[i]-current_sum)
 
-            print("Iteração: ", current_iteraction)
-            print("xk = ", xk)
             current_eps = get_normres(x, xk)
             saida.append([current_iteraction, current_eps])
             if compare(current_eps, eps):
