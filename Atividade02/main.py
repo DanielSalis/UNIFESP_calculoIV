@@ -10,7 +10,7 @@ def generate_matrix(alpha, beta, n):
             if (j == i):
                 matrix[i][j] = alpha
             elif (j == i-1 or j == i+1):
-                matrix[i][j] = beta
+                matrix[i][j] = -1*beta
             else:
                 matrix[i][j] = 0
     return np.array(matrix)
