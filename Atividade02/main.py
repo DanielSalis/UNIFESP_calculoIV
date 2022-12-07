@@ -28,18 +28,19 @@ def generate_array_b(alpha, beta, n):
 
 A_matrix = generate_matrix(4, 1, 20)
 b_array = generate_array_b(4, 1, 20)
+x_array = [0 for i in range(len(b_array))]
 
 print(A_matrix)
 print(b_array)
 
-A = [[10, 2,  1],
-     [1, 5,  1],
-     [2, 3, 10]]
+# A = [[3, -1,  1],
+#      [1, 5,  -2],
+#      [2, -1, 4]]
 
-b = [7, -8, 6]
+# b = [3, 4, 5]
 
-x = gJacobi(A, b, 10, 0.01)
+x = gJacobi(A_matrix, b_array, x_array, 2000, 0.00000001)
 print("x = ", x)
 
-x = gSeidel(A, b, 10, 0.01)
+x = gSeidel(A_matrix, b_array, x_array, 2000, 0.00000001)
 print("x = ", x)

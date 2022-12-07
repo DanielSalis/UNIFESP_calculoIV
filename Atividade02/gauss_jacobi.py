@@ -18,11 +18,12 @@ def compare(current_eps, eps):
         return False
 
 
-def run(A, b, max_iterations, eps):
+def run(A, b, x_array, max_iterations, eps):
     saida = []
     b_array_length = len(b)
     has_soluction = True
-    x = b.copy()
+    x = x_array.copy()
+    print(x)
     for i in list(range(0, b_array_length, 1)):
         if (math.fabs(A[i][i]) > 0.0):
             x[i] = b[i]/A[i][i]
