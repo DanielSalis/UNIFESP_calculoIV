@@ -11,6 +11,15 @@ def get_normres(x, xk):
     return current_sum
 
 
+def get_normrel(x, xk):
+    # sempre pegando a primeira posicao
+    x_i = x[0]
+    xk_i = xk[0]
+    normrel = math.fabs(xk_i - x_i) / math.fabs(xk_i)
+
+    return normrel
+
+
 def compare(current_eps, eps):
     if (current_eps < eps):
         return True
@@ -47,11 +56,15 @@ def run(A, b, x_array, max_iterations, eps):
                 xk[i] = (1/A[i][i])*(b[i]-current_sum)
 
             current_eps = get_normres(x, xk)
-            saida.append([current_iteraction, current_eps])
+            current_normrel = get_normrel(x, xk)
+            saida.append([current_iteraction, current_eps, current_normrel])
             if compare(current_eps, eps):
+                x = xk.copy()
+                break
+            if compare(current_normrel, eps):
                 x = xk.copy()
                 break
             x = xk.copy()
 
-    print(tabulate(saida, headers=["k", "normres"]))
+    print(tabulate(saida, headers=["k", "normres", "normrel"]))
     return x
