@@ -2,6 +2,7 @@ import numpy as np
 from gauss_jacobi import run as gJacobi
 from gauss_jacobi import plot as gJacobiPlot
 from gauss_seidel import run as gSeidel
+from tabulate import tabulate
 
 # Questao 2
 
@@ -47,8 +48,23 @@ print(x_array)
 
 # Questao 3
 
-x = gJacobi(A_matrix, b_array, x_array, 2000, 0.00000001)
+x = gJacobi(A_matrix, b_array, x_array, 2000, 0.00000001, True)
 print("x = ", x)
 
-x = gSeidel(A_matrix, b_array, x_array, 2000, 0.00000001)
+x = gSeidel(A_matrix, b_array, x_array, 2000, 0.00000001, True)
 print("x = ", x)
+
+
+# Questão 4
+number_of_iterations = list(range(1, 11))
+saida = []
+for i in number_of_iterations:
+    A_matrix = generate_matrix(i, 2, 20)
+    b_array = generate_array_b(i, 2, 20)
+    x, jacobi_iterations = gJacobi(
+        A_matrix, b_array, x_array, 2000, 0.00000001, False)
+    x, seidel_iterations = gSeidel(
+        A_matrix, b_array, x_array, 2000, 0.00000001, False)
+    saida.append([i, jacobi_iterations, seidel_iterations])
+
+print(tabulate(saida, headers=["alpha", "Jacobi", "Seidel"]))

@@ -28,12 +28,13 @@ def compare(current_eps, eps):
         return False
 
 
-def run(A, b, x_array, max_iterations, eps):
+def run(A, b, x_array, max_iterations, eps, run_plot):
     saida = []
     Eres = []
     Erel = []
     b_array_length = len(b)
     has_soluction = True
+    total_iterations = 0
     x = x_array.copy()
     for i in list(range(0, b_array_length, 1)):
         if (math.fabs(A[i][i]) > 0.0):
@@ -61,6 +62,7 @@ def run(A, b, x_array, max_iterations, eps):
             Eres.append(current_eps)
             Erel.append(current_normrel)
             saida.append([current_iteraction, current_eps, current_normrel])
+            total_iterations = current_iteraction
             if compare(current_eps, eps):
                 x = xk.copy()
                 break
@@ -70,8 +72,10 @@ def run(A, b, x_array, max_iterations, eps):
             x = xk.copy()
 
     print(tabulate(saida, headers=["k", "normres", "normrel"]))
-    plot(Eres, Erel)
-    return x
+    if (run_plot):
+        plot(Eres, Erel)
+
+    return x, total_iterations
 
 
 def plot(Eres, Erel):
