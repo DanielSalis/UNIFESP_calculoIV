@@ -1,5 +1,6 @@
 import numpy as np
 from gauss_jacobi import run as gJacobi
+from gauss_jacobi import plot as gJacobiPlot
 from gauss_seidel import run as gSeidel
 
 # Questao 2

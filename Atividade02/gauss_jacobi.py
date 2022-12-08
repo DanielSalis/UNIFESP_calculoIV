@@ -1,4 +1,5 @@
 import math
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 
 
@@ -29,6 +30,8 @@ def compare(current_eps, eps):
 
 def run(A, b, x_array, max_iterations, eps):
     saida = []
+    Eres = []
+    Erel = []
     b_array_length = len(b)
     has_soluction = True
     x = x_array.copy()
@@ -55,6 +58,8 @@ def run(A, b, x_array, max_iterations, eps):
 
             current_eps = get_normres(x, xk)
             current_normrel = get_normrel(x, xk)
+            Eres.append(current_eps)
+            Erel.append(current_normrel)
             saida.append([current_iteraction, current_eps, current_normrel])
             if compare(current_eps, eps):
                 x = xk.copy()
@@ -65,4 +70,17 @@ def run(A, b, x_array, max_iterations, eps):
             x = xk.copy()
 
     print(tabulate(saida, headers=["k", "normres", "normrel"]))
+    plot(Eres, Erel)
     return x
+
+
+def plot(Eres, Erel):
+    x_axis = list(range(0, len(Eres)))
+    plt.plot(x_axis, Eres)
+    plt.ylabel('some numbers')
+    plt.show()
+
+    x_axis = list(range(0, len(Erel)))
+    plt.plot(x_axis, Erel)
+    plt.ylabel('some numbers')
+    plt.show()
