@@ -77,12 +77,14 @@ def run(A, b, x_array, max_iterations, eps):
 def plot(Eres, Erel):
     x_axis = list(range(0, len(Eres)))
     plt.plot(x_axis, Eres)
-    plt.ylabel('Erel')
+    plt.title("Gaus-Jacobi")
+    plt.ylabel('Eres')
     plt.xlabel('iterations')
     plt.show()
 
     x_axis = list(range(0, len(Erel)))
     plt.plot(x_axis, Erel)
+    plt.title("Gaus-Jacobi")
     plt.ylabel('Erel')
     plt.xlabel('iterations')
     plt.show()
