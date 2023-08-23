@@ -32,17 +32,35 @@ def bisection(func, a, b, tolerance):
     return tabulate(saida, headers=["k", "xk", "f(xk)", 'stepk'])
 
 
-def sqrt(A):
-  x = A
-  while x**2 - A > 0.00000001:
-    x = (x + A/x) / 2
-  return x
+def heron(n, a_initial):
+    i = 0
+    prev = a_initial
+    saida = []
+    error = 1
+    while error >= 0.000001:
+        new = 0.5 * (prev + n/prev)
+        error = abs(new - prev)
+        prev = new
+        i = i + 1
+        saida.append([i, new, error])
 
-# Aquecimento
-print(bisection("(x/(x**2 + 1)**(3/2)) -0.1668", 0, 1, 0.00000001))
+    return tabulate(saida, headers=["iteration", "a_current", "error"])
 
-# Atividade 1 - 1
-print(bisection("(x**2)-2", 0, 2, 0.00000001))
+print('Aquecimento')
+print(bisection("(x/(x**2 + 1)**(3/2)) -0.1668", 0, 1, 0.000001))
+print('\n')
 
-## Atividade 1 - 2
-print(sqrt(2))
+print('Atividade 1 - 1')
+print(bisection("(x**2)-2", 0, 2, 0.000001))
+print('\n')
+
+print('Atividade 1 - 2')
+print(heron(2, 1))
+print('\n')
+
+print('Atividade 1 - 3')
+print(heron(2, 2))
+print('\n')
+
+print('Atividade 1 - 4')
+print('Erros já estão sendo calculados\n')
