@@ -1,7 +1,37 @@
 from tabulate import tabulate
 import numpy as np
+import math
 
-def bisection(func, a, b, tolerance):
+def cps_equation(A):
+    h = 290
+    C = 1100
+    F = 0.7
+    D = 13
+
+    numerador = math.pi * (h / math.cos(A)) ** 2 * F
+    denominador = 0.5 * math.pi * D ** 2 * (1 + math.sin(A) - 0.5 * math.cos(A))
+
+    return C - numerador / denominador
+
+def cps_derivate(A):
+    h = 290
+    F = 0.7
+    D = 13
+
+    numerador = -2 * math.pi * h ** 2 * F * math.tan(A) / math.cos(A) ** 3
+    denominador = 0.5 * math.pi * D ** 2 * (math.cos(A) + 0.5 * math.sin(A))
+
+    return numerador / denominador
+
+def oxygen_equation(x):
+    return 10 - 20 * ((np.exp(-0.2*x)) - (np.exp(0.75*x))) - 5
+
+def equacao_colebrook_1(f):
+    Re = 3*(10e5),
+    epsilon_DH = 0.0001
+    return 1 / (math.sqrt(f)) + 2 * math.log10(epsilon_DH / 3.7 + 2.51 / (Re[0] * math.sqrt(f)))
+
+def bisectionMehod(func, a, b, tolerance=1e-6):
     current_error = abs(b-a)
     k = 1
     saida = []
@@ -22,30 +52,22 @@ def bisection(func, a, b, tolerance):
             current_error = abs(b-a)
             fk = func(c)*func(b)
 
-        saida.append([k, c, fk, current_error])
-        k += 1
+    return c
 
-    return tabulate(saida, headers=["k", "xk", "f(xk)", 'error'])
+def newtonsMethod(func, der, x0, tolerance=1e-6, max_iter=100):
+    x = x0
+    iteracao = 0
 
-def newtonsMethod(function_statement, derivative_statement, x, max_iteractions):
-    iteration = 1
-    saida = []
+    while iteracao < max_iter:
+        delta_x = func(x) / der(x)
+        x = x - delta_x
 
-    def function(x):
-        f = eval(function_statement)
-        return f
+        if abs(delta_x) < tolerance:
+            return x
 
-    def derivative(x):
-        d = eval(derivative_statement)
-        return d
+        iteracao += 1
 
-    while abs(function(x)) >= 1e-6 and iteration <= max_iteractions:
-        saida.append([iteration,x,function(x)])
-        i = x - (function(x) / derivative(x))
-        x = i
-        iteration += 1
-
-    return tabulate(saida, headers=["iteration", "x", "f(x)"])
+    return None
 
 def secantMethod(func, x0, x1, tolerance, max_iteractions):
     saida = []
@@ -53,6 +75,7 @@ def secantMethod(func, x0, x1, tolerance, max_iteractions):
         fx0 = func(x0)
         fx1 = func(x1)
         if abs(fx1) < tolerance:
+            return xi
             break
         xi = x1 - fx1*((x1-x0)/(fx1-fx0))
         fxi = func(xi)
@@ -60,28 +83,29 @@ def secantMethod(func, x0, x1, tolerance, max_iteractions):
         x0 = x1
         x1 = xi
 
-    return tabulate(saida, headers=["iteraction", "xi", "func(xi)", "fx0"])
+    # return tabulate(saida, headers=["iteraction", "xi", "func(xi)", "fx0"])
 
-print("\nAtividade 2 - 1")
-def equation(x):
-    return x**3 - x**2 - 1
-print(newtonsMethod("x**3 - x**2 - 1 ", "3*x**2 - 2*x", 2, 10) + '\n')
-print(bisection(equation, 0, 2, 1e-6) + '\n')
-print("Podemos perceber que o método da bissecção demorou 20 iterações enquanto o de newton apenas 4")
+    h = 290
+    F = 0.7
+    D = 13
 
-print("\nAtividade 2 - 2")
-def equationI(x):
-    return x**2 - 7
-print("\nBisecção\n", bisection(equationI, 1, 3, 1e-6))
-print("\nNewton\n", newtonsMethod("x**2 - 7", "2*x", 7, 100))
-print("\nSecante\n", secantMethod(equationI, 1, 3, 1e-6, 100))
-print("Podemos perceber que o método da secante demorou 4 iterações, o de newton 5 e o da bissecção demorou 20")
+    numerador = -2 * math.pi * h ** 2 * F * math.tan(A) / math.cos(A) ** 3
+    denominador = 0.5 * math.pi * D ** 2 * (math.cos(A) + 0.5 * math.sin(A))
+
+    return numerador / denominador
+
+print("\nAtividade 2_2 - 1")
+print("Utilizando o método de newton conseguimos encontrar o valor: " + str(newtonsMethod(cps_equation, cps_derivate, 1, 1e-6, 100)))
+
+print("\nAtividade 2_2 - 2")
+print("Utilizando o método de newton conseguimos encontrar o valor: " + str(secantMethod(oxygen_equation, -1, 1, 1e-6, 100)))
 
 
-print("\nAtividade 2 - 3")
-def equationII(t, k = 0.67):
-    return np.exp(-0.5 * t) * np.arccosh(np.exp(0.5 * t)) - np.sqrt(k / 2)
-
-print("\nBisecção\n", bisection(equationII, 1, 3, 1e-6))
-print("\nSecante\n", secantMethod(equationII, 1, 3, 1e-6, 100))
-print("Podemos perceber que o método da secante demorou 4 iterações, bissecção demorou 20")
+casos = [
+    {"Re": 3e5, "epsilon_DH": 0.0001},
+    {"Re": 1e4, "epsilon_DH": 0.03},
+    {"Re": 3e5, "epsilon_DH": 0.01}
+]
+print("\nAtividade 2_2 - 3")
+print("Utilizando o método da secante conseguimos encontrar o valor: " + str(secantMethod(equacao_colebrook_1, 0.0001, 0.0003, 1e-6, 100)))
+print("Utilizando o método da bissecção conseguimos encontrar o valor: " + str(bisectionMehod(equacao_colebrook_1, 0.0001, 1, 1e-6)))
