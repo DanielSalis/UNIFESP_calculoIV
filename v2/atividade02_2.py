@@ -27,9 +27,20 @@ def oxygen_equation(x):
     return 10 - 20 * ((np.exp(-0.2*x)) - (np.exp(0.75*x))) - 5
 
 def equacao_colebrook_1(f):
-    Re = 3*(10e5),
+    Re = 3*(10e4),
     epsilon_DH = 0.0001
     return 1 / (math.sqrt(f)) + 2 * math.log10(epsilon_DH / 3.7 + 2.51 / (Re[0] * math.sqrt(f)))
+
+def equacao_colebrook_2(f):
+    Re = 1*(10e5),
+    epsilon_DH = 0.03
+    return 1 / (math.sqrt(f)) + 2 * math.log10(epsilon_DH / 3.7 + 2.51 / (Re[0] * math.sqrt(f)))
+
+def equacao_colebrook_3(f):
+    Re = 3*(10e5),
+    epsilon_DH = 0.01
+    return 1 / (math.sqrt(f)) + 2 * math.log10(epsilon_DH / 3.7 + 2.51 / (Re[0] * math.sqrt(f)))
+
 
 def bisectionMehod(func, a, b, tolerance=1e-6):
     current_error = abs(b-a)
@@ -109,3 +120,9 @@ casos = [
 print("\nAtividade 2_2 - 3")
 print("Utilizando o método da secante conseguimos encontrar o valor: " + str(secantMethod(equacao_colebrook_1, 0.0001, 0.0003, 1e-6, 100)))
 print("Utilizando o método da bissecção conseguimos encontrar o valor: " + str(bisectionMehod(equacao_colebrook_1, 0.0001, 1, 1e-6)))
+print("\n"+ str(casos[1]))
+print("Utilizando o método da secante conseguimos encontrar o valor: " + str(secantMethod(equacao_colebrook_2, 0.0001, 0.0003, 1e-6, 100)))
+print("Utilizando o método da bissecção conseguimos encontrar o valor: " + str(bisectionMehod(equacao_colebrook_2, 0.0001, 1, 1e-6)))
+print("\n"+ str(casos[2]))
+print("Utilizando o método da secante conseguimos encontrar o valor: " + str(secantMethod(equacao_colebrook_3, 0.0001, 0.0003, 1e-6, 100)))
+print("Utilizando o método da bissecção conseguimos encontrar o valor: " + str(bisectionMehod(equacao_colebrook_3, 0.0001, 1, 1e-6)))
