@@ -118,6 +118,7 @@ casos = [
     {"Re": 3e5, "epsilon_DH": 0.01}
 ]
 print("\nAtividade 2_2 - 3")
+print("\n"+ str(casos[0]))
 print("Utilizando o método da secante conseguimos encontrar o valor: " + str(secantMethod(equacao_colebrook_1, 0.0001, 0.0003, 1e-6, 100)))
 print("Utilizando o método da bissecção conseguimos encontrar o valor: " + str(bisectionMehod(equacao_colebrook_1, 0.0001, 1, 1e-6)))
 print("\n"+ str(casos[1]))
