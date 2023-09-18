@@ -18,9 +18,7 @@ def gauss_jacobi(A_b, x):
     for i in reversed(range(len(x))):
         x[i] = (A_b[i, -1] - np.dot(A_b[i, i+1:len(x)], x[i+1:len(x)])) / A_b[i, i]
 
-
-
-print("Atividade 3 - parte 2; Exercício 1:")
+# print("Atividade 3 - parte 2; Exercício 1:")
 n2 = 3
 A2 = np.array([[70, 20, 10],
                [10, 90, 0],
@@ -42,6 +40,8 @@ plt.title('Plot dos pontos')
 plt.xlabel('T')
 plt.ylabel('C')
 plt.show()
+
+print("------ || ------\n")
 
 # Método de newton
 def divided_difference(x, y):
@@ -81,6 +81,35 @@ plt.plot(x_values, y_values, label='Interpolation Polynomial', color='blue')
 plt.xlabel('T')
 plt.ylabel('C')
 plt.legend()
-plt.title('Interpolação com método de newton')
+plt.title('Interpolação com método de newton. Ex 3')
+plt.grid(True)
+plt.show()
+
+print("Atividade 3 - parte 2; Exercício 4:")
+# Given data
+T_data = np.array([605, 685, 725, 765, 825, 855, 875])
+C_data = np.array([0.622, 0.655, 0.688, 0.679, 0.730, 0.907, 1.336])
+
+coefficients = divided_difference(T_data, C_data)[0]
+
+T_values_to_estimate = [645, 795, 845]
+
+C_estimated = [interpolate(T, coefficients, T_data) for T in T_values_to_estimate]
+
+known_values = [0.639, 0.694, 0.812]
+
+for i, T_value in enumerate(T_values_to_estimate):
+    print(f"Valor estimado de C({T_value}): {C_estimated[i]} vs (Conhecido: {known_values[i]})")
+
+x_values = np.linspace(min(T_data), max(T_data), 100)
+y_values = [interpolate(x, coefficients, T_data) for x in x_values]
+
+plt.scatter(T_data, C_data, label='Data Points', color='red')
+plt.plot(x_values, y_values, label='Interpolation Polynomial', color='blue')
+
+plt.xlabel('T')
+plt.ylabel('C')
+plt.legend()
+plt.title('Interpolação exercício 4')
 plt.grid(True)
 plt.show()
