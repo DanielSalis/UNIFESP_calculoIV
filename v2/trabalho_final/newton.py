@@ -1,6 +1,9 @@
 from manim import *
 
 class Newtons(Scene):
+  iteractions = 0
+  finalValue = 0
+
   def construct(self):
     title = Tex(r"Método de newton")
     VGroup(title).arrange(DOWN)
@@ -38,6 +41,8 @@ class Newtons(Scene):
     )
 
     self.newtonsMethod(graph, grid, basel, lambda x: np.sin(x) + x**2,  lambda x: np.cos(x) + 2*x, 1, 1e-6, 100)
+
+    self.endScene()
 
     self.wait(2)
 
@@ -92,6 +97,22 @@ class Newtons(Scene):
         if abs(delta_x) < tolerance:
             return x
 
-        iteracao += 1
+        iteracao = iteracao + 1
+        self.iteractions = iteracao
+        self.finalValue = func(x)
 
-    return None
+    return iteracao
+
+  def endScene(self):
+    self.clear()
+
+    totalIteractionsTitle = Tex(r"Total de iterações: "+ str(self.iteractions))
+    finalValueTitle = Tex(r"f(x) final: " + str(round(self.finalValue, 4))).next_to(totalIteractionsTitle, DOWN)
+    self.play(
+      Write(totalIteractionsTitle),
+    )
+    self.wait()
+    self.play(
+      Write(finalValueTitle)
+    )
+    self.wait()
