@@ -33,20 +33,19 @@ class Newtons(Scene):
       Create(grid, run_time=3, lag_ratio=0.1)
     )
 
-
-    graph = grid.plot(lambda x: np.sin(x), color=BLUE, x_range=[-5, 5  * PI])
+    graph = grid.plot(lambda x: x**3 - x**2 - 2, color=BLUE)
     self.add(graph)
     self.play(
       Create(graph, run_time=3, lag_ratio=0.1)
     )
 
-    self.newtonsMethod(graph, grid, basel, lambda x: np.sin(x) + x**2,  lambda x: np.cos(x) + 2*x, 1, 1e-6, 100)
+    self.newtonsMethod(graph, grid, basel, lambda x: x**3 - x**2 - 2, lambda x: 3*x**2 - 2*x, 1, 1e-6, 15)
 
     self.endScene()
 
     self.wait(2)
 
-  def newtonsMethod(self, graph, grid, basel, func, der, x0, tolerance=1e-6, max_iter=100):
+  def newtonsMethod(self, graph, grid, basel, func, der, x0, tolerance=1e-6, max_iter=15):
     x = x0
     iteracao = 0
     self.play(
@@ -75,9 +74,6 @@ class Newtons(Scene):
         delta_x = func(x) / der(x)
         x = x - delta_x
 
-        # grid.scale(1.1)
-        # graph.scale(1.1)
-
         self.play(
             FadeIn(dot_axes),
         )
@@ -92,14 +88,17 @@ class Newtons(Scene):
             FadeOut(dot_axes),
         )
 
-        self.wait(0.5)
-
-        if abs(delta_x) < tolerance:
-            return x
+        self.wait(
+           duration=0.5
+        )
 
         iteracao = iteracao + 1
         self.iteractions = iteracao
-        self.finalValue = func(x)
+        self.finalValue = x
+
+        if abs(delta_x) < tolerance:
+          return x
+
 
     return iteracao
 
@@ -107,7 +106,7 @@ class Newtons(Scene):
     self.clear()
 
     totalIteractionsTitle = Tex(r"Total de iterações: "+ str(self.iteractions))
-    finalValueTitle = Tex(r"f(x) final: " + str(round(self.finalValue, 4))).next_to(totalIteractionsTitle, DOWN)
+    finalValueTitle = Tex(r"x final: " + str(round(self.finalValue, 4))).next_to(totalIteractionsTitle, DOWN)
     self.play(
       Write(totalIteractionsTitle),
     )
