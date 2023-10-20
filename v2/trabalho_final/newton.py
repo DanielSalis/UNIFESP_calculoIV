@@ -39,7 +39,7 @@ class Newtons(Scene):
       Create(graph, run_time=3, lag_ratio=0.1)
     )
 
-    self.newtonsMethod(graph, grid, basel, lambda x: x**3 - x**2 - 2, lambda x: 3*x**2 - 2*x, 2, 1e-6, 15)
+    self.newtonsMethod(graph, grid, basel, lambda x: x**3 - x**2 - 2, lambda x: 3*x**2 - 2*x, 4, 1e-6, 15)
 
     self.endScene()
 
@@ -84,9 +84,9 @@ class Newtons(Scene):
           FadeOut(fnTitle),
         )
 
-        self.play(
-            FadeOut(dot_axes),
-        )
+        # self.play(
+        #     FadeOut(dot_axes),
+        # )
 
         self.wait(
            duration=0.5
