@@ -39,7 +39,7 @@ class Newtons(Scene):
       Create(graph, run_time=3, lag_ratio=0.1)
     )
 
-    self.newtonsMethod(graph, grid, basel, lambda x: x**3 - x**2 - 2, lambda x: 3*x**2 - 2*x, 1, 1e-6, 15)
+    self.newtonsMethod(graph, grid, basel, lambda x: x**3 - x**2 - 2, lambda x: 3*x**2 - 2*x, 2, 1e-6, 15)
 
     self.endScene()
 
@@ -56,7 +56,7 @@ class Newtons(Scene):
         iterTitle = Tex("Iteração: " + str(iteracao))
         iterTitle.to_corner(UP+LEFT)
 
-        xTitle = Tex("x: " + str(x))
+        xTitle = Tex("x: " + str(round(x, 4)))
         xTitle.to_corner(UP+RIGHT)
 
         fnTitle = Tex("f(x): " + str(round(func(x), 4)))
