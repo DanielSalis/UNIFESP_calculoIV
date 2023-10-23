@@ -6,7 +6,7 @@ from secante import secantMethod
 class mainClass(Scene):
     iteractions = 0
     finalValue = 0
-    methodType = "secante"
+    methodType = "bisection"
     funcao_lambda = lambda x: x**3 - x**2 - 2
 
     def construct(self):
