@@ -1,51 +1,6 @@
 from manim import *
 
-class Secante(Scene):
-    iteractions = 0
-    finalValue = 0
-
-    def construct(self):
-        title = Tex(r"Método da Secante")
-        VGroup(title).arrange(DOWN)
-        self.play(
-            Write(title),
-        )
-        self.wait()
-
-        transform_title = Tex("Confira a equação:")
-        transform_title.to_corner(UP + LEFT)
-        self.play(
-            Transform(title, transform_title),
-        )
-        self.wait()
-
-        grid = Axes(
-            x_range=[-5, 5],
-            y_range=[-10, 10],
-        ).add_coordinates()
-        basel = MathTex(r"f(x) = \sin(x) + x^2")
-        basel.move_to(transform_title)
-        grid.center()
-        self.add(grid, basel)
-        self.play(
-            FadeOut(title),
-            FadeIn(basel, shift=UP),
-            Create(grid, run_time=3, lag_ratio=0.1)
-        )
-
-        graph = grid.plot(lambda x: x**3 - x**2 - 2, color=BLUE)
-        self.add(graph)
-        self.play(
-            Create(graph, run_time=3, lag_ratio=0.1)
-        )
-
-        self.secantMethod(graph, grid, basel, lambda x: x**3 - x**2 - 2, 3, 4, 1e-6, 15)
-
-        self.endScene()
-
-        self.wait(2)
-
-    def secantMethod(self, graph, grid, basel, func, x0, x1, tolerance=1e-6, max_iter=15):
+def secantMethod(self, graph, grid, basel, func, x0, x1, tolerance=1e-6, max_iter=15):
         x0_value = x0
         x1_value = x1
         iteracao = 0
@@ -112,17 +67,3 @@ class Secante(Scene):
             self.finalValue = x2_value
 
         return iteracao
-
-    def endScene(self):
-        self.clear()
-
-        totalIteractionsTitle = Tex(r"Total de iterações: " + str(self.iteractions))
-        finalValueTitle = Tex(r"x final: " + str(round(self.finalValue, 4))).next_to(totalIteractionsTitle, DOWN)
-        self.play(
-            Write(totalIteractionsTitle),
-        )
-        self.wait()
-        self.play(
-            Write(finalValueTitle)
-        )
-        self.wait()
