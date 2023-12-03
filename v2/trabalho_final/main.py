@@ -6,11 +6,11 @@ from secante import secantMethod
 class mainClass(Scene):
     iteractions = 0
     finalValue = 0
-    methodType = "bisection"
+    methodType = "secante"
     funcao_lambda = lambda x: x**3 - x**2 - 2
 
     def construct(self):
-        title = Tex(r"Método da Bissecção")
+        title = Tex(r"Método - " +  self.methodType)
         VGroup(title).arrange(DOWN)
         self.play(
             Write(title),
